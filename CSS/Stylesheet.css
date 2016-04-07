@@ -29,6 +29,8 @@ body {
 
 .ImageHeader {
     width: 100%;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .TextFull {
@@ -199,4 +201,9 @@ body {
 
 .ProductForm {
 	width: 200px;
+}
+
+.SongsTable {
+    width: 90%;
+    cellspacing: 50px;
 }

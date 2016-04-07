@@ -18,7 +18,7 @@
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
                     <a href="Index.php" style="text-decoration: none;">
-                        <span class="mdl-layout-title" style="color: #ffffff;">EDM Central</span>
+                        <img src = "SiteImages/EDMTUBE.png" height="70px" width="110px"/>
                     </a>
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
@@ -36,6 +36,8 @@
                     <a class="mdl-navigation__link" href="Future.php">Future House</a>
                     <a class="mdl-navigation__link" href="Trap.php">Trap</a>
                     <a class="mdl-navigation__link" href="Dubstep.php">Dubstep</a>
+                    <a class="mdl-navigation__link" href="Dance.php">Dance</a>
+                    <a class="mdl-navigation__link" href="Rave.php">Rave</a>
                 </nav>
             </div>
             <main class="mdl-layout__content">
@@ -46,6 +48,67 @@
                     <div class="ImageHeader">
                         <img src="SiteImages/EDMHero.jpg" width="100%">
                     </div>
+
+                    <center>
+                        <table class="SongsTable" cellspacing="20">
+                            <!--This is where php will echo out the table data-->
+                            <tr>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                                <td class="Column">
+                                    <img src="AlbumImages/1.jpg" width="100%">
+                                    <br>
+                                    <h6>Dubstep</h6>
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
 
                     <footer class="mdl-mini-footer">
                         <div class="mdl-mini-footer__left-section">
