@@ -22,9 +22,20 @@
                     </a>
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
-                        <a class="mdl-navigation__link" href="SignIn.php">Sign In</a>
+                        <a class="mdl-navigation__link" href="Register.php">Register</a>
+
+                        <?php
+                            if (!isset($_SESSION['SignIn'])) {
+                                echo "<a class=" . "mdl-navigation__link" . "href=" . "SignIn.php" . ">Sign In</a>";
+                            }
+
+                            else {
+                                $UserName = $_SESSION['UserName'];
+
+                                echo "<a class=" . "mdl-navigation__link" . "href=" . "Profile.php" . ">$UserName</a>";
+                            }
+                        ?>
                         <a class="mdl-navigation__link" href="Upload.php">Upload</a>
-                        <a class="mdl-navigation__link" href="User.php">User Name</a>
                     </nav>
                 </div>
             </header>
@@ -50,64 +61,23 @@
                     </div>
 
                     <center>
-                        <table class="SongsTable" cellspacing="20">
-                            <!--This is where php will echo out the table data-->
-                            <tr>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                            </tr>
+                        <div class="SongsContainer">
+                            <?php
+                                // This is the part where it sets up the songs being displayed
+                                $Query = $dbh->prepare("SELECT * FROM Songs ORDER BY Date ASC, Genre ASC");
+                                $Query->execute();
+                                $Songs = $Query->fetchAll();
 
-                            <tr>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                                <td class="Column">
-                                    <img src="AlbumImages/1.jpg" width="100%">
-                                    <br>
-                                    <h6>Dubstep</h6>
-                                </td>
-                            </tr>
-                        </table>
+                                foreach ($Songs as $row) {
+                                    $FilePath = "Songs/" . $row['FileName'];
+
+                                    echo '<div class="Song">';
+                                    
+                                    echo '</div>';
+                                }
+                            ?>
+                        </div>
+                        <div style="clear: both;"></div>
                     </center>
 
                     <footer class="mdl-mini-footer">

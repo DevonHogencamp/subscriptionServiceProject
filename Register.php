@@ -1,49 +1,54 @@
 <?php
-    // Establish Connections and Sessions
     session_start();
     require_once ('Connect.php');
 
-    if (@$_POST['Upload']) {
-        $UserID = $_SESSION['UserID'];
-        $Title = $_POST['Title'];
-        $Artist = $_POST['Artist'];
-        $Genre = $_POST['Genre'];
-        $FileName = $_FILES['FileName'] ['name'];
-        $FileSize = $_FILES['FileName'] ['size'];
+    if (@$_POST['Register']) {
+        $UserName = $_POST['UserName'];
+        $Email = $_POST['Email'];
+        $Password = $_POST['Password'];
+        $ConfirmPassword = $_POST['ConfirmPassword'];
 
-        if (!empty($Title) && !empty($Artist) && !empty($Genre) && !empty($FileName)) {
-            if ($FileSize < 10000000) {
-                $FilePath = "Songs/$FileName";
-                
-                if (move_uploaded_file($_FILES['FileName']['tmp_name'], $FilePath)) {
-                    $Query = $dbh->prepare("INSERT INTO Songs (SongID, Title, Artist, Genre, UserID, Date, FileName)
-                    VALUES (:SongID, :Title, :Artist, :Genre, :UserID, NOW(), :FileName)");
+        if (!empty($UserName) && !empty($Email) && !empty($Password) && !empty($ConfirmPassword)) {
+            if ($Password == $ConfirmPassword) {
+                $Query = $dbh->prepare("INSERT INTO Users (UserID, UserName, Password, Email) VALUES (:UserID, :UserName, :Password, :Email)");
 
-                    $Result = $Query->execute(
-                        array(
-                            'SongID' => 0,
-                            'Title' => $Title,
-                            'Artist' => $Artist,
-                            'Genre' => $Genre,
-                            'UserID' => $UserID,
-                            'FileName' => $FileName
-                        )
-                    );
+                $Result = $Query->execute(
+                    array(
+                        'UserID' => 0,
+                        'UserName' => $UserName,
+                        'Password' => $Password,
+                        'Email' => $Email
+                    )
+                );
 
-                }
+                //Just select the UserID because we dont know what it will be
+                $Query = $dbh->prepare("SELECT UserID, FROM Users WHERE Email = :Email AND Password = :Password");
 
-                else {
-                    echo "BAD UPLOAD";
-                }
+                $Query->execute(
+                    array(
+                        'Email' => $Email,
+                        'Password' => $Password
+                    )
+                );
+
+                $UserInfo = $Query->fetch();
+
+                //Queried Data is then saved in PHP Session
+                $_SESSION['UserID'] = $UserInfo[0];
+                $_SESSION['UserName'] = $UserName;
+                $_SESSION['Email'] = $Email;
+                $_SESSION['SignIn'] = true;
+
+                header('location: Profile.php');
             }
 
             else {
-                echo "<p>File is to large</p>";
+                echo "<p>Your Passwords Dont Match</p>";
             }
         }
 
         else {
-            echo "<p>Please fill out all of the fields</p>";
+            echo "<p>You did not fill out one of the input fields</p>";
         }
     }
 ?>
@@ -85,35 +90,35 @@
                     <a class="mdl-navigation__link" href="Rave.php">Rave</a>
                 </nav>
             </div>
+
             <main class="mdl-layout__content">
                 <div class="page-content">
                     <center>
-                        <h1>Upload Your Own Music</h1>
+                        <h1>Register Here</h1>
 
-                        <?php
-                            if (!isset($_SESSION['SignIn'])) {
-                                echo "<p>You must be signed in to upload music</p>";
-                            }
-                        ?>
+                        <form method="post" class="Form" name="Register">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input class="mdl-textfield__input" type="text" name="Email">
+                                <label class="mdl-textfield__label" for="sample1">Email</label>
+                            </div>
 
-                        <form enctype="multipart/form-data" method="post" class="Form" name="Upload">
                             <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" name="Title">
-                                <label class="mdl-textfield__label" for="sample1">Title</label>
+                                <input class="mdl-textfield__input" type="text" name="UserName">
+                                <label class="mdl-textfield__label" for="sample1">Username</label>
                             </div>
+
                             <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" name="Artist">
-                                <label class="mdl-textfield__label" for="sample1">Artist</label>
+                                <input class="mdl-textfield__input" type="text" name="Password">
+                                <label class="mdl-textfield__label" for="sample1">Password</label>
                             </div>
+
                             <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" name="Genre">
-                                <label class="mdl-textfield__label" for="sample1">Genre</label>
+                                <input class="mdl-textfield__input" type="text" name="ConfirmPassword">
+                                <label class="mdl-textfield__label" for="sample1">Confirm Password</label>
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield">
-                                <input type="file" class="mdl-textfield__input" type="text" name="FileName" id="FileName">
-                            </div>
+
                             <center>
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="Upload" value="Add">Upload</button>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="Register" value="1">Sign In</button>
                             </center>
                         </form>
                     </center>

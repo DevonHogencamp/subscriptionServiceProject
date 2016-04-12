@@ -1,6 +1,53 @@
 <?php
+    //Establish connect and sessions
     session_start();
     require_once ('Connect.php');
+
+    //If the person is already logged in then take them to their Profile Page
+    if(@$_SESSION['SignIn'] == true){
+        header('location: Profile.php');
+    }
+
+    //Starts the Sign In Proccess
+
+    if (@$_POST['SignIn']) {
+        //Sets local variables
+        $Email = $_POST['Email'];
+        $Password = $_POST['Password'];
+
+        //If they filled out both fields then procced
+        if (!empty($Email) && !empty($Password)) {
+            $Query = $dbh->prepare("SELECT UserID, UserName, Email FROM Users WHERE Email = :Email AND Password = :Password");
+
+            $Query->execute(
+                array(
+                    'Email' => $Email,
+                    'Password' => $Password
+                )
+            );
+
+            $UserInfo = $Query->fetch();
+
+            //If the UserInfo has been selected then Store Info
+            if ($UserInfo) {
+                //Queried Data is then saved in PHP Session
+                $_SESSION['UserID'] = $UserInfo['0'];
+                $_SESSION['UserName'] = $UserInfo['1'];
+                $_SESSION['Email'] = $UserInfo['2'];
+                $_SESSION['SignIn'] = true;
+
+                header('location: Profile.php');
+            }
+
+            else {
+                echo "<p>There is no account with that info</p>";
+            }
+        }
+
+        else {
+            echo "<p>You did not enter in username or password</p>";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +108,7 @@
 
                         <h6>Dont Have an account, Register Here.</h6>
                         <a href="Register.php">
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="Register">Register</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="Register">Register</button>
                         </a>
                     </center>
 

@@ -203,7 +203,12 @@ body {
 	width: 200px;
 }
 
-.SongsTable {
+
+.SongsContainer {
     width: 90%;
-    cellspacing: 50px;
+}
+
+.Song {
+    width: 300px;
+    margin: 15px;
 }
