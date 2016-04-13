@@ -23,18 +23,7 @@
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         <a class="mdl-navigation__link" href="Register.php">Register</a>
-
-                        <?php
-                            if (!isset($_SESSION['SignIn'])) {
-                                echo "<a class=" . "mdl-navigation__link" . "href=" . "SignIn.php" . ">Sign In</a>";
-                            }
-
-                            else {
-                                $UserName = $_SESSION['UserName'];
-
-                                echo "<a class=" . "mdl-navigation__link" . "href=" . "Profile.php" . ">$UserName</a>";
-                            }
-                        ?>
+                        <a class="mdl-navigation__link" href="Profile.php">Profile</a>
                         <a class="mdl-navigation__link" href="Upload.php">Upload</a>
                     </nav>
                 </div>
@@ -69,20 +58,22 @@
                                 $Songs = $Query->fetchAll();
 
                                 foreach ($Songs as $row) {
-                                    $FilePath = "Songs/" . $row['FileName'];
+                                    $AlbumPath = "Album/" . $row['AlbumName'];
 
                                     echo '<div class="Song">';
-                                    
+                                    echo '<img' . " " . 'width="' . '100%"' . " " . 'src="'. $AlbumPath .'"/>';
+                                    echo "<br>";
+                                    echo '<p>' . $row['Artist'] . "-" . $row['Title'] . '</p>';
                                     echo '</div>';
                                 }
+                                echo '<div style="clear: both;"</div>';
                             ?>
                         </div>
-                        <div style="clear: both;"></div>
                     </center>
 
                     <footer class="mdl-mini-footer">
                         <div class="mdl-mini-footer__left-section">
-                            <div class="mdl-logo">Tech Master</div>
+                            <div class="mdl-logo">EDM Tube</div>
                             <ul class="mdl-mini-footer__link-list">
                                 <li>
                                     <a href = "SignIn.php">Sign In</a>

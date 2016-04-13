@@ -2,22 +2,30 @@
     // Establish Connections and Sessions
     session_start();
     require_once ('Connect.php');
+    $Success = false;
 
     if (@$_POST['Upload']) {
         $UserID = $_SESSION['UserID'];
+
         $Title = $_POST['Title'];
         $Artist = $_POST['Artist'];
         $Genre = $_POST['Genre'];
-        $FileName = $_FILES['FileName'] ['name'];
-        $FileSize = $_FILES['FileName'] ['size'];
 
-        if (!empty($Title) && !empty($Artist) && !empty($Genre) && !empty($FileName)) {
-            if ($FileSize < 10000000) {
-                $FilePath = "Songs/$FileName";
-                
-                if (move_uploaded_file($_FILES['FileName']['tmp_name'], $FilePath)) {
-                    $Query = $dbh->prepare("INSERT INTO Songs (SongID, Title, Artist, Genre, UserID, Date, FileName)
-                    VALUES (:SongID, :Title, :Artist, :Genre, :UserID, NOW(), :FileName)");
+        $SongName = $_FILES['SongName'] ['name'];
+        $SongSize = $_FILES['SongName'] ['size'];
+
+        $AlbumName = $_FILES['AlbumName'] ['name'];
+        $AlbumSize = $_FILES['AlbumName'] ['size'];
+
+        if (!empty($Title) && !empty($Artist) && !empty($Genre) && !empty($SongName) && !empty($AlbumName)) {
+            if (($SongSize < 10000000) && ($AlbumSize < 10000000)) {
+                $SongPath = "Songs/$SongName";
+                $AlbumPath = "Album/$AlbumName";
+
+                if (move_uploaded_file($_FILES['SongName']['tmp_name'], $SongPath) && move_uploaded_file($_FILES['AlbumName']['tmp_name'], $AlbumPath)) {
+
+                    $Query = $dbh->prepare("INSERT INTO Songs (SongID, Title, Artist, Genre, UserID, Date, SongName, AlbumName)
+                    VALUES (:SongID, :Title, :Artist, :Genre, :UserID, NOW(), :SongName, :AlbumName)");
 
                     $Result = $Query->execute(
                         array(
@@ -26,10 +34,12 @@
                             'Artist' => $Artist,
                             'Genre' => $Genre,
                             'UserID' => $UserID,
-                            'FileName' => $FileName
+                            'SongName' => $SongName,
+                            'AlbumName' => $AlbumName
                         )
                     );
 
+                    $Success = true;
                 }
 
                 else {
@@ -110,18 +120,29 @@
                                 <label class="mdl-textfield__label" for="sample1">Genre</label>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield">
-                                <input type="file" class="mdl-textfield__input" type="text" name="FileName" id="FileName">
+                                <input type="file" class="mdl-textfield__input" type="text" name="SongName" id="SongName">
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input type="file" class="mdl-textfield__input" type="text" name="AlbumName" id="AlbumName">
                             </div>
                             <center>
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="Upload" value="Add">Upload</button>
                             </center>
                         </form>
+
+                        <p>
+                            <?php
+                                if ($Success == true) {
+                                    echo "You have successfully uploaded your song";
+                                }
+                            ?>
+                        </p>
                     </center>
 
 
                     <footer class="mdl-mini-footer" style="position: fixed; bottom: 0; width: 100%;">
                         <div class="mdl-mini-footer__left-section">
-                            <div class="mdl-logo">Tech Master</div>
+                            <div class="mdl-logo">EDM Tube</div>
                             <ul class="mdl-mini-footer__link-list">
                                 <li>
                                     <a href = "SignIn.php">Sign In</a>

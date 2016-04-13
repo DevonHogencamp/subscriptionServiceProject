@@ -115,7 +115,7 @@
 
                     <footer class="mdl-mini-footer" style="position: fixed; bottom: 0; width: 100%;">
                         <div class="mdl-mini-footer__left-section">
-                            <div class="mdl-logo">Tech Master</div>
+                            <div class="mdl-logo">EDM Tube</div>
                             <ul class="mdl-mini-footer__link-list">
                                 <li>
                                     <a href = "SignIn.php">Sign In</a>

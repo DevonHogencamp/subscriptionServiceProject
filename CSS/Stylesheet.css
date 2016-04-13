@@ -203,12 +203,12 @@ body {
 	width: 200px;
 }
 
-
 .SongsContainer {
     width: 90%;
 }
 
 .Song {
-    width: 300px;
+    width: 230px;
     margin: 15px;
+    float: left;
 }
