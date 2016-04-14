@@ -24,8 +24,8 @@
 
                 if (move_uploaded_file($_FILES['SongName']['tmp_name'], $SongPath) && move_uploaded_file($_FILES['AlbumName']['tmp_name'], $AlbumPath)) {
 
-                    $Query = $dbh->prepare("INSERT INTO Songs (SongID, Title, Artist, Genre, UserID, Date, SongName, AlbumName)
-                    VALUES (:SongID, :Title, :Artist, :Genre, :UserID, NOW(), :SongName, :AlbumName)");
+                    $Query = $dbh->prepare("INSERT INTO Songs (SongID, Title, Artist, Genre, UserID, Date, SongName, AlbumName, Approved)
+                    VALUES (:SongID, :Title, :Artist, :Genre, :UserID, NOW(), :SongName, :AlbumName, :Approved)");
 
                     $Result = $Query->execute(
                         array(
@@ -35,7 +35,8 @@
                             'Genre' => $Genre,
                             'UserID' => $UserID,
                             'SongName' => $SongName,
-                            'AlbumName' => $AlbumName
+                            'AlbumName' => $AlbumName,
+                            'Approved' => 0
                         )
                     );
 

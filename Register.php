@@ -39,6 +39,12 @@
                 $_SESSION['Email'] = $Email;
                 $_SESSION['SignIn'] = true;
 
+                $to = "$Email";
+                $subject = "EDM Tube Register Confirmation";
+                $txt = "Hello $UserName,<br>We are emailing you to confirm your registration at EDM Tube";
+
+                mail($to,$subject,$txt);
+
                 header('location: Profile.php');
             }
 

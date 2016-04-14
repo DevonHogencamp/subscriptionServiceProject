@@ -23,6 +23,7 @@
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         <a class="mdl-navigation__link" href="Register.php">Register</a>
+                        <a class="mdl-navigation__link" href="SignIn.php">Sign In</a>
                         <a class="mdl-navigation__link" href="Profile.php">Profile</a>
                         <a class="mdl-navigation__link" href="Upload.php">Upload</a>
                     </nav>
